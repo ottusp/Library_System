@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+    <title>Send book</title>
+</head>
+<body>
+<form method="post" th:action="@{/}" th:object="${newTask}">
+    <div class="row">
+        <div class="nine columns">
+            <input type="text" placeholder="Description of the task" class="u-full-width" th:field="*{description}" />
+        </div>
+        <div class="three columns">
+            <button type="submit" class="button-primary u-full-width">Add</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

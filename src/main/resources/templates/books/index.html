@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+    <title>Books</title>
+</head>
+<body>
+<h1>Books</h1>
+<p>What do you want to do?</p>
+<form th:method="get" th:action="@{/books/index.html}">
+    <button class="button u-full-width" type="submit">See list of all books</button>
+</form>
+
+
+</body>
+</html>

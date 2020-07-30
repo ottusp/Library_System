@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+    <title>All Books</title>
+</head>
+<body>
+<h1>Here you have all our books!</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Publisher</th>
+            <th>Authors</th>
+        </tr>
+    </thead>
+    <!--/*@thymesVar id="books" type="java"*/-->
+    <tr th:each="book: ${books}">
+        <th th:text="${book.title}">Title</th>
+        <th th:text="${book?.publisher}">Publisher</th>
+        <th th:each="author: ${book.authors}">
+            <div th:text="${author.firstName} + ' ' + ${author.lastName}"></div>
+        </th>
+    </tr>
+</table>
+</body>
+</html>
