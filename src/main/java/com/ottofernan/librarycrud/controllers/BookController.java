@@ -21,11 +21,6 @@ public class BookController {
         this.restBookService = restBookService;
     }
 
-    @GetMapping({"", "/", "index", "index.html"})
-    public String getIndexPage(){
-        return "books/index.html";
-    }
-
     @GetMapping({"/list", "/listBooks"})
     public String getBooks(Model model){
         model.addAttribute("books", restBookService.findAllBooks());
@@ -43,6 +38,16 @@ public class BookController {
 
         model.addAttribute("search", new Book());
         return "books/searchResults";
+    }
+
+    @GetMapping("/returnBook")
+    public String returnBook(){
+        return "notImplemented";
+    }
+
+    @GetMapping("/donate")
+    public String donate(){
+        return "notImplemented";
     }
 
     @PostMapping("/post")

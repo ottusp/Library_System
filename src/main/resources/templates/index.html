@@ -2,13 +2,35 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Library</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+    <title>Books</title>
+    <style>
+        .buttons{
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
-<h1>Welcome</h1>
-<p>Choose one option</p>
-<button onclick="window.location.href='http://localhost:8080/books';">
-    Click Here
-</button>
+<h1>Spring tree library</h1>
+<p>What do you want to do?</p>
+<div class="buttons">
+
+    <form th:method="get" th:action="@{/books/list}">
+        <button class="button u-pull-left" type="submit">See list of all books</button>
+    </form>
+    <form th:method="get" th:action="@{/books/search}">
+        <button class="button u-pull-left" type="submit">Search for a book title</button>
+    </form>
+    <form th:method="get" th:action="@{/books/donate}">
+        <button class="button u-pull-left" type="submit">Donate book</button>
+    </form>
+    <form th:method="get" th:action="@{/books/return}">
+        <button class="button u-pull-left" type="submit">Return book</button>
+    </form>
+</div>
+
 </body>
 </html>
