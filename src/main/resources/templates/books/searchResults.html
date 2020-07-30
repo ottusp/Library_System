@@ -15,10 +15,10 @@
 
 </head>
 <body>
-<form action="#" th:action="@{/books/search}" th:object="${search}">
+<form action="#" th:action="@{/api/books/getByTitle}" th:object="${search}">
     <label>Search:</label>
-    <input name="search" id="search" />
-    <div th:if="${not #lists.isEmpty(search)}">
+    <input name="search" id="search" th:field="*{title}" />
+    <div th:if="${not #sets.isEmpty(search.getTitle())}">
         <h2>Search Results</h2>
         <table>
             <thead>

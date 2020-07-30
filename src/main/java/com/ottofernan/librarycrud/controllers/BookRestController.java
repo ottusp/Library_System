@@ -2,36 +2,39 @@ package com.ottofernan.librarycrud.controllers;
 
 import com.ottofernan.librarycrud.models.Book;
 import com.ottofernan.librarycrud.repositories.BookRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.ottofernan.librarycrud.services.BookService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/api/books")
 public class BookRestController {
 
-    private final BookRepository bookRepository;
+    private final BookService bookService;
 
-    public BookRestController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public BookRestController(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @GetMapping("/getAll")
     public Set<Book> getAll(){
-        Set<Book> books = new HashSet<>();
-        bookRepository.findAll().forEach(books::add);
-
-        return books;
+        return bookService.findAll();
     }
 
     @GetMapping("/get/{id}")
     public Book getById(@PathVariable("id") Long id){
-        if(id != null) {
-            Book book = bookRepository.findById(id).orElse(null);
-            return book;
+        return bookService.findById(id);
+    }
+
+    @GetMapping("/getByTitle")
+    public Set<Book> getByTitle(@ModelAttribute("search") Book book){
+
+        System.out.println("Book = " + book);
+        if(book != null){
+            return bookService.findAllByTitle(book.getTitle());
         } else {
             return null;
         }
@@ -42,7 +45,7 @@ public class BookRestController {
         if(book != null){
             if(!book.getTitle().isEmpty() && !book.getIsbn().isEmpty()
                     && !book.getPublisher().isEmpty()) {
-                bookRepository.save(book);
+                bookService.save(book);
             }
         }
 

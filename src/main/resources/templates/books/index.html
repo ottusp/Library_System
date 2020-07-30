@@ -8,10 +8,13 @@
     <title>Books</title>
 </head>
 <body>
-<h1>Books</h1>
+<h1>Spring tree library</h1>
 <p>What do you want to do?</p>
-<form th:method="get" th:action="@{/books/index.html}">
-    <button class="button u-full-width" type="submit">See list of all books</button>
+<form th:method="get" th:action="@{/books/list}">
+    <button class="button u-pull-left" type="submit">See list of all books</button>
+</form>
+<form th:method="get" th:action="@{/books/search}">
+    <button class="button u-pull-left" type="submit">Search for a book title</button>
 </form>
 
 

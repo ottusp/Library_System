@@ -8,10 +8,16 @@
     <title>Send book</title>
 </head>
 <body>
-<form method="post" th:action="@{/}" th:object="${newTask}">
+<form method="post" th:action="@{/books/post}" th:object="${newBook}">
     <div class="row">
         <div class="nine columns">
-            <input type="text" placeholder="Description of the task" class="u-full-width" th:field="*{description}" />
+            <input type="text" placeholder="Title" class="u-full-width" th:field="*{title}" />
+        </div>
+        <div class="nine columns">
+            <input type="text" placeholder="Publisher" class="u-full-width" th:field="*{publisher}" />
+        </div>
+        <div class="nine columns">
+            <input type="text" placeholder="ISBN" class="u-full-width" th:field="*{isbn}" />
         </div>
         <div class="three columns">
             <button type="submit" class="button-primary u-full-width">Add</button>

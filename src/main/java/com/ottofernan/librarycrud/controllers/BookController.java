@@ -1,14 +1,11 @@
 package com.ottofernan.librarycrud.controllers;
 
 import com.ottofernan.librarycrud.models.Book;
-import com.ottofernan.librarycrud.services.HibernateSearchService;
 import com.ottofernan.librarycrud.services.RestBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping({"/books", "/books/"})
@@ -17,15 +14,19 @@ public class BookController {
     @Autowired
     private final RestBookService restBookService;
 
-    @Autowired
-    private final HibernateSearchService searchService;
+//    @Autowired
+//    private final HibernateSearchService searchService;
 
-    public BookController(RestBookService restBookService, HibernateSearchService searchService) {
+    public BookController(RestBookService restBookService) {
         this.restBookService = restBookService;
-        this.searchService = searchService;
     }
 
-    @GetMapping({"", "/", "/index", "/index.html"})
+    @GetMapping({"", "/", "index", "index.html"})
+    public String getIndexPage(){
+        return "books/index.html";
+    }
+
+    @GetMapping({"/list", "/listBooks"})
     public String getBooks(Model model){
         model.addAttribute("books", restBookService.findAllBooks());
         model.addAttribute("newBook", new Book());
@@ -38,19 +39,13 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam(value = "search", required = false) String query, Model model){
-        List<Book> searchResults = null;
-        try{
-            searchResults = searchService.fuzzySearch(query);
-        } catch (Exception ex){
-            System.out.println("Error... " + searchResults);
-        }
+    public String search(Model model){
 
-        model.addAttribute("search", searchResults);
+        model.addAttribute("search", new Book());
         return "books/searchResults";
     }
 
-    @PostMapping(path = "/post")
+    @PostMapping("/post")
     public String postBook(@ModelAttribute("newBook") Book book){
         System.out.println(book);
 

@@ -4,6 +4,9 @@ import com.ottofernan.librarycrud.models.Book;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -24,6 +27,10 @@ public class RestBookServiceImpl implements RestBookService {
     public Set<Book> findAllBooks(){
         return Set.of(restTemplate.getForObject(resource, Book[].class));
     }
+
+//    public List<Book> findByTitle(){
+//        return Arrays.asList(restTemplate.getForObject())
+//    }
 
     public Book create(Book book){
         return restTemplate.postForObject(resource, book, Book.class);
