@@ -2,7 +2,6 @@ package com.ottofernan.librarycrud.controllers;
 
 import com.ottofernan.librarycrud.models.Book;
 import com.ottofernan.librarycrud.services.RestBookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping({"/books", "/books/"})
 public class BookController {
 
-    @Autowired
     private final RestBookService restBookService;
 
     public BookController(RestBookService restBookService) {
@@ -23,7 +21,7 @@ public class BookController {
         model.addAttribute("books", restBookService.findAllBooks());
         model.addAttribute("newBook", new Book());
 
-        return "books/listBooks.html";
+        return "books/listBooks";
     }
 
     @GetMapping("/search")
@@ -34,6 +32,7 @@ public class BookController {
         } else{
             model.addAttribute("results", restBookService.findByTitle(title));
         }
+        model.addAttribute("rented_book_id");
         return "books/searchResults";
     }
 
@@ -48,8 +47,8 @@ public class BookController {
     }
 
     @GetMapping("/rent")
-    public String rentBook(){
-        System.out.println("RENT");
+    public String rentBook(@ModelAttribute("rented_book_id") Long id){
+        System.out.println("On rent, book is " + id);
         return "notImplemented";
     }
 
@@ -58,7 +57,7 @@ public class BookController {
         System.out.println(book);
 
         restBookService.create(book);
-        return "books/index.html";
+        return "index";
     }
 
 }

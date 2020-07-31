@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class RestBookServiceImpl implements RestBookService {
@@ -26,13 +26,13 @@ public class RestBookServiceImpl implements RestBookService {
         this.restTemplate = restTemplate;
     }
 
-    public Set<Book> findAllBooks(){
-        return Set.of(restTemplate.getForObject(getAllResource, Book[].class));
+    public List<Book> findAllBooks(){
+        return Arrays.asList(restTemplate.getForObject(getAllResource, Book[].class));
     }
 
-    public Set<Book> findByTitle(String title){
+    public List<Book> findByTitle(String title){
         String query = findByTitleResource + "?title=" + title;
-        return Set.of(restTemplate.getForObject(query, Book[].class));
+        return Arrays.asList(restTemplate.getForObject(query, Book[].class));
     }
 
     public Book create(Book book){

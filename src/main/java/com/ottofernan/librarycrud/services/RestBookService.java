@@ -3,13 +3,13 @@ package com.ottofernan.librarycrud.services;
 
 import com.ottofernan.librarycrud.models.Book;
 
-import java.util.Set;
+import java.util.List;
 
 public interface RestBookService {
 
-    public Set<Book> findAllBooks();
+    public List<Book> findAllBooks();
 
     public Book create(Book book);
 
-    public Set<Book> findByTitle(String title);
+    public List<Book> findByTitle(String title);
 }

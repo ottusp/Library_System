@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Search book</title>
     <!--  BEGIN STYLE -->
     <style>
         table, th, td {
@@ -12,19 +13,19 @@
         }
     </style>
 
-    <script>
-        function rentPage() {
-            document.location.href = "rent"
-            window.alert('Hello!')
-        }
-    </script>
-
 </head>
 <body>
-<form action="#" th:action="@{/books/search}" th:object="${title}">
-    <label>Search:</label>
-    <input value="text" name="title" id="title" th:value="${title}" />
-    <div th:if="${not #strings.isEmpty(title)}">
+
+<form action="#" th:action="@{/books/search}" th:object="${title}" id="search_book" ></form>
+<label for="title">Search:</label>
+<input value="text" th:value="${title}" name="title" id="title" form="search_book" />
+<button type="submit" form="search_book">Search</button>
+
+<div th:if="${not #strings.isEmpty(title)}">
+    <div th:if="${#sets.isEmpty(results)}">
+        <p>No book found</p>
+    </div>
+    <div th:unless="${#sets.isEmpty(results)}">
         <h2>Search Results</h2>
             <table>
             <thead>
@@ -36,20 +37,25 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="book : ${results}">
-                <td th:text="${book.id}">Text ...</td>
-                <td th:text="${book.title}">Text ...</td>
-                <td th:text="${book.publisher}">Text ...</td>
-                <td th:text="${book.isbn}">Text...</td>
-                <td>
-                    <button class="button u-pull-left" type="submit" th:onclick="rentPage()">
-                        Rent this
-                    </button>
-                </td>
-            </tr>
+                <tr th:each="book, item : ${results}">
+                    <td th:text="${book.id}">Text ...</td>
+                    <td th:text="${book.title}">Text ...</td>
+                    <td th:text="${book.publisher}">Text ...</td>
+                    <td th:text="${book.isbn}">Text...</td>
+                    <td>
+                        <form action="#" th:action="@{/books/rent}" th:object="${rented_book_id}"  >
+                            <label>
+                                <input hidden th:name="rented_book_id" th:value="${book.id}" />
+                            </label>
+                            <button type="submit">
+                                Rent this
+                            </button>
+                        </form>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
-</form>
+</div>
 </body>
 </html>
