@@ -30,11 +30,10 @@ public class BookRestController {
     }
 
     @GetMapping("/getByTitle")
-    public Set<Book> getByTitle(@ModelAttribute("search") Book book){
+    public Set<Book> getByTitle(@ModelAttribute("title") String title){
 
-        System.out.println("Book = " + book);
-        if(book != null){
-            return bookService.findAllByTitle(book.getTitle());
+        if(title != null){
+            return bookService.findAllByTitle(title);
         } else {
             return null;
         }

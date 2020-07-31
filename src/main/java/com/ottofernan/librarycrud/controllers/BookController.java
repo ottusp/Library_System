@@ -14,9 +14,6 @@ public class BookController {
     @Autowired
     private final RestBookService restBookService;
 
-//    @Autowired
-//    private final HibernateSearchService searchService;
-
     public BookController(RestBookService restBookService) {
         this.restBookService = restBookService;
     }
@@ -26,17 +23,18 @@ public class BookController {
         model.addAttribute("books", restBookService.findAllBooks());
         model.addAttribute("newBook", new Book());
 
-        restBookService.findAllBooks().forEach(book -> {
-            System.out.println(book.getAuthors());
-        });
-
         return "books/listBooks.html";
     }
 
     @GetMapping("/search")
-    public String search(Model model){
+    public String search(@ModelAttribute("title") String title, Model model){
 
-        model.addAttribute("search", new Book());
+        System.out.println("Title = " + title);
+        if(title == null) {
+            model.addAttribute("title", "");
+        } else{
+            model.addAttribute("results", restBookService.findByTitle(title));
+        }
         return "books/searchResults";
     }
 

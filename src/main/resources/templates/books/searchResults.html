@@ -15,10 +15,10 @@
 
 </head>
 <body>
-<form action="#" th:action="@{/api/books/getByTitle}" th:object="${search}">
+<form action="#" th:action="@{/books/search}" th:object="${title}">
     <label>Search:</label>
-    <input name="search" id="search" th:field="*{title}" />
-    <div th:if="${not #sets.isEmpty(search.getTitle())}">
+    <input value="text" name="title" id="title" th:value="${title}" />
+    <div th:if="${not #strings.isEmpty(title)}">
         <h2>Search Results</h2>
         <table>
             <thead>
@@ -30,11 +30,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="search : ${search}">
-                <td th:text="${search.id}">Text ...</td>
-                <td th:text="${search.title}">Text ...</td>
-                <td th:text="${search.publisher}">Text ...</td>
-                <td th:text="${search.isbn}">Text...</td>
+            <tr th:each="book : ${results}">
+                <td th:text="${book.id}">Text ...</td>
+                <td th:text="${book.title}">Text ...</td>
+                <td th:text="${book.publisher}">Text ...</td>
+                <td th:text="${book.isbn}">Text...</td>
             </tr>
             </tbody>
         </table>
