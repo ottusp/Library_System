@@ -11,6 +11,6 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     Book findByTitle(String name);
 
-    Set<Book> findByTitleLike(String title);
+    Set<Book> findByTitleIgnoreCaseLikeOrderByTitleAsc(String title);
 
 }

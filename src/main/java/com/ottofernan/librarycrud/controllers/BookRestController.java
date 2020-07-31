@@ -1,12 +1,9 @@
 package com.ottofernan.librarycrud.controllers;
 
 import com.ottofernan.librarycrud.models.Book;
-import com.ottofernan.librarycrud.repositories.BookRepository;
 import com.ottofernan.librarycrud.services.BookService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -21,6 +18,7 @@ public class BookRestController {
 
     @GetMapping("/getAll")
     public Set<Book> getAll(){
+
         return bookService.findAll();
     }
 

@@ -1,21 +1,16 @@
 package com.ottofernan.librarycrud.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-//import javax.persistence.Table;
+import javax.persistence.Table;
 
-@Indexed
 @Entity
 @Table(name = "books")
 public class Book extends BaseEntity{
 
-    @Field(termVector = TermVector.YES)
     private String title;
     private String publisher;
     private String isbn;

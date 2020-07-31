@@ -25,7 +25,7 @@ public class DataLoader implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         authorRepository.findAll().forEach(System.out::println);
         bookRepository.findAll().forEach(System.out::println);
 
