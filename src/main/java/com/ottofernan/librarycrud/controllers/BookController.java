@@ -29,7 +29,6 @@ public class BookController {
     @GetMapping("/search")
     public String search(@ModelAttribute("title") String title, Model model){
 
-        System.out.println("Title = " + title);
         if(title == null) {
             model.addAttribute("title", "");
         } else{
@@ -45,6 +44,12 @@ public class BookController {
 
     @GetMapping("/donate")
     public String donate(){
+        return "notImplemented";
+    }
+
+    @GetMapping("/rent")
+    public String rentBook(){
+        System.out.println("RENT");
         return "notImplemented";
     }
 
