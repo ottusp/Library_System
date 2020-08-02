@@ -47,8 +47,12 @@ public class BookController {
     }
 
     @GetMapping("/rent")
-    public String rentBook(@ModelAttribute("rented_book_id") Long id){
-        System.out.println("On rent, book is " + id);
+    public String rentBook(@ModelAttribute("rented_book_id") Long id, Model model){
+
+        if(id != null){
+//            model.addAttribute("rentedBook", restBookService.findById(id));
+            System.out.println(restBookService.findById(id));
+        }
         return "notImplemented";
     }
 

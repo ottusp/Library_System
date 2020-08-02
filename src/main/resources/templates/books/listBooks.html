@@ -17,7 +17,6 @@
             <th>Authors</th>
         </tr>
     </thead>
-    <!--/*@thymesVar id="books" type="java"*/-->
     <tr th:each="book: ${books}">
         <th th:text="${book.title}">Title</th>
         <th th:text="${book?.publisher}">Publisher</th>

@@ -1,7 +1,6 @@
 package com.ottofernan.librarycrud.services.restbook;
 
 import com.ottofernan.librarycrud.models.Book;
-import com.ottofernan.librarycrud.services.restbook.RestBookService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,7 +14,7 @@ public class RestBookServiceImpl implements RestBookService {
     private final RestTemplate restTemplate;
 
     @Value("${resource.get_books}")
-    private String getAllResource;
+    private String getBookResource;
 
     @Value("${resource.get_books_by_title}")
     private String findByTitleResource;
@@ -28,7 +27,7 @@ public class RestBookServiceImpl implements RestBookService {
     }
 
     public List<Book> findAllBooks(){
-        return Arrays.asList(restTemplate.getForObject(getAllResource, Book[].class));
+        return Arrays.asList(restTemplate.getForObject(getBookResource, Book[].class));
     }
 
     public List<Book> findByTitle(String title){
@@ -36,7 +35,12 @@ public class RestBookServiceImpl implements RestBookService {
         return Arrays.asList(restTemplate.getForObject(query, Book[].class));
     }
 
+    public Book findById(Long id){
+        String url = getBookResource + "/" + id;
+        return restTemplate.getForObject(url, Book.class);
+    }
+
     public Book create(Book book){
-        return restTemplate.postForObject(getAllResource, book, Book.class);
+        return restTemplate.postForObject(getBookResource, book, Book.class);
     }
 }

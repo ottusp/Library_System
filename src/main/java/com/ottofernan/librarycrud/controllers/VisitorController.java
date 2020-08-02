@@ -26,7 +26,7 @@ public class VisitorController {
             return "/visitors/signIn";
         } else{
             visitorService.save(visitor);
-            return "/";
+            return "index";
         }
 
     }

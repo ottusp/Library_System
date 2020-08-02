@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface RestBookService {
 
-    public List<Book> findAllBooks();
+     List<Book> findAllBooks();
 
-    public Book create(Book book);
+     Book create(Book book);
 
-    public List<Book> findByTitle(String title);
+     List<Book> findByTitle(String title);
+
+     Book findById(Long id);
 }

@@ -16,7 +16,7 @@ public class BookRestController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/get")
     public Set<Book> getAll(){
 
         return bookService.findAll();
