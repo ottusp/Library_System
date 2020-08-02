@@ -28,4 +28,14 @@ public class Visitor extends Person{
     public void setBooks(Set<Book> books) {
         this.books = books;
     }
+
+    @Override
+    public String toString() {
+        String string = super.toString();
+        string += "Visitor{" +
+                "password='" + password + '\'' +
+                ", books=" + books +
+                '}';
+        return string;
+    }
 }

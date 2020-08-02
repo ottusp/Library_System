@@ -1,6 +1,7 @@
-package com.ottofernan.librarycrud.services;
+package com.ottofernan.librarycrud.services.restbook;
 
 import com.ottofernan.librarycrud.models.Book;
+import com.ottofernan.librarycrud.services.restbook.RestBookService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

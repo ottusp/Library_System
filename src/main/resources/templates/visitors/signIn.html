@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign in</title>
+
+    <style>
+        #sign-in{
+            display: flex;
+            -ms-flex-align: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+<form action="#" th:action="@{/visitors/signIn}" id="sign-in" th:object="${visitor}">
+    <div>
+        <label for="first-name">First name: </label>
+        <input id="first-name" value="text" th:field="*{firstName}" name="first-name"/>
+        <label for="last-name">Last name: </label>
+        <input id="last-name" value="text" th:field="*{lastName}" name="last-name"/>
+        <label for="password">Password: </label>
+        <input id="password" value="text" th:field="*{password}" name="password"/>
+        <button type="submit">Sign in</button>
+    </div>
+</form>
+</body>
+</html>

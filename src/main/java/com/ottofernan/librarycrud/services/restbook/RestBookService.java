@@ -1,4 +1,4 @@
-package com.ottofernan.librarycrud.services;
+package com.ottofernan.librarycrud.services.restbook;
 
 
 import com.ottofernan.librarycrud.models.Book;

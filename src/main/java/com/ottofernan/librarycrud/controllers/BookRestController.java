@@ -1,7 +1,7 @@
 package com.ottofernan.librarycrud.controllers;
 
 import com.ottofernan.librarycrud.models.Book;
-import com.ottofernan.librarycrud.services.BookService;
+import com.ottofernan.librarycrud.services.book.BookService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;

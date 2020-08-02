@@ -1,7 +1,7 @@
 package com.ottofernan.librarycrud.controllers;
 
 import com.ottofernan.librarycrud.models.Book;
-import com.ottofernan.librarycrud.services.RestBookService;
+import com.ottofernan.librarycrud.services.restbook.RestBookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
