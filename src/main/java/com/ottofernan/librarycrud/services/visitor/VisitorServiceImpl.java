@@ -16,4 +16,12 @@ public class VisitorServiceImpl implements VisitorService {
     public Visitor save(Visitor visitor){
         return visitorRepository.save(visitor);
     }
+
+    public Visitor findById(Long id){
+        return visitorRepository.findById(id).orElse(null);
+    }
+
+    public Visitor findByFirstName(String firstName){
+        return visitorRepository.findByFirstName(firstName);
+    }
 }

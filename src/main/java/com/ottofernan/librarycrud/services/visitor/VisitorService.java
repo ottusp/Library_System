@@ -4,5 +4,9 @@ import com.ottofernan.librarycrud.models.Visitor;
 
 public interface VisitorService {
 
-    public Visitor save(Visitor visitor);
+     Visitor save(Visitor visitor);
+
+     Visitor findById(Long id);
+
+     Visitor findByFirstName(String firstName);
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rent</title>
+</head>
+<body>
+<h1>Rent book</h1>
+<p>You are about to rent this book:
+    <b th:text="${borrowing_visitor.book.title} + ' ' + ${rented_book.getAuthors().toArray()[0]}"></b>
+</p>
+<p>Type your id and password to confirm</p>
+
+<form action="#" th:action="@{/visitors/auth}" th:object="${borrowing_visitor}">
+    <label for="first-name">First name: </label>
+    <input id="first-name" value="text" th:field="*{visitor.firstName}" name="first-name"/>
+    <label for="password">Password: </label>
+    <input id="password" value="text" th:field="*{visitor.password}" name="password"/>
+
+    <input hidden id="bookId" th:field="*{book.id}" />
+    <button type="submit">Rent!</button>
+</form>
+
+</body>
+</html>

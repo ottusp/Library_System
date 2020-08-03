@@ -19,6 +19,9 @@ public class RestBookServiceImpl implements RestBookService {
     @Value("${resource.get_books_by_title}")
     private String findByTitleResource;
 
+    @Value("${resource.post_book}")
+    private String postResource;
+
     @Value("${resource.get_books}/{id}")
     private String idResource;
 
@@ -42,5 +45,14 @@ public class RestBookServiceImpl implements RestBookService {
 
     public Book create(Book book){
         return restTemplate.postForObject(getBookResource, book, Book.class);
+    }
+
+    public void update(Book book){
+        if(book == null) return;
+        Long id = book.getId();
+        System.out.println("Updating id: " + id);
+//        HttpMessageC
+        String url = postResource + "?id=" + id;
+        restTemplate.put(url, id);
     }
 }

@@ -11,6 +11,8 @@ public interface RestBookService {
 
      Book create(Book book);
 
+     void update(Book book);
+
      List<Book> findByTitle(String title);
 
      Book findById(Long id);

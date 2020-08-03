@@ -28,8 +28,6 @@ public class Author extends Person{
     @Override
     public String toString() {
 
-        return "Author{firstName = " + getFirstName()
-                + ", lastName = " + getLastName()
-                + "}";
+        return getFirstName() + " " + getLastName();
     }
 }

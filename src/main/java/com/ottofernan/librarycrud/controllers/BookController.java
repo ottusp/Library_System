@@ -1,6 +1,8 @@
 package com.ottofernan.librarycrud.controllers;
 
 import com.ottofernan.librarycrud.models.Book;
+import com.ottofernan.librarycrud.models.Visitor;
+import com.ottofernan.librarycrud.models.VisitorBook;
 import com.ottofernan.librarycrud.services.restbook.RestBookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,10 +52,11 @@ public class BookController {
     public String rentBook(@ModelAttribute("rented_book_id") Long id, Model model){
 
         if(id != null){
-//            model.addAttribute("rentedBook", restBookService.findById(id));
-            System.out.println(restBookService.findById(id));
+            Book rentedBook = restBookService.findById(id);
+            model.addAttribute("rented_book", rentedBook);
+            model.addAttribute("borrowing_visitor", new VisitorBook(new Visitor(), rentedBook));
         }
-        return "notImplemented";
+        return "/books/rentBook";
     }
 
     @PostMapping("/post")

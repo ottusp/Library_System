@@ -11,10 +11,10 @@ import javax.persistence.Table;
 @Table(name = "books")
 public class Book extends BaseEntity{
 
-    private String title;
-    private String publisher;
-    private String isbn;
-    private Integer amount;
+    private String title = "";
+    private String publisher = "";
+    private String isbn = "";
+    private Integer amount = 0;
 
     @JsonIgnore
     @ManyToMany

@@ -48,4 +48,15 @@ public class BookRestController {
 
         return book;
     }
+
+    @PutMapping("/post")
+    public void updateBook(@RequestBody Book book){
+        if(book != null){
+            Book checkedBook = bookService.findById(book.getId());
+            if(checkedBook != null) {
+                System.out.println("Book rest controller: book = " + book);
+                bookService.save(book);
+            }
+        }
+    }
 }
