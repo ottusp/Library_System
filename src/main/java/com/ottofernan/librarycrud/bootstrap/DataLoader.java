@@ -2,6 +2,7 @@ package com.ottofernan.librarycrud.bootstrap;
 
 import com.ottofernan.librarycrud.models.Author;
 import com.ottofernan.librarycrud.models.Book;
+import com.ottofernan.librarycrud.models.Visitor;
 import com.ottofernan.librarycrud.repositories.AuthorRepository;
 import com.ottofernan.librarycrud.repositories.BookRepository;
 import com.ottofernan.librarycrud.repositories.VisitorRepository;
@@ -52,6 +53,16 @@ public class DataLoader implements CommandLineRunner {
         freeTo.setAuthors(Set.of(peter));
         theFault.setAuthors(Set.of(john));
         letIt.setAuthors(Set.of(john, lauren));
+
+        Visitor otto = new Visitor();
+        otto.setFirstName("Otto");
+        otto.setLastName("Fernandes");
+        otto.setPassword("123456");
+        otto.setBooks(Set.of(einsteinBio, freeTo));
+        visitorRepository.save(otto);
+
+        einsteinBio.setVisitors(Set.of(otto));
+        freeTo.setVisitors(Set.of(otto));
 
         bookRepository.save(letIt);
         bookRepository.save(theFault);

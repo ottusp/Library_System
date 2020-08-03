@@ -7,7 +7,7 @@
 <body>
 <h1>Rent book</h1>
 <p>You are about to rent this book:
-    <b th:text="${borrowing_visitor.book.title} + ' ' + ${rented_book.getAuthors().toArray()[0]}"></b>
+    <b th:text="${rented_book.title} + ' - ' + ${rented_book.getAuthors().toArray()[0]}"></b>
 </p>
 <p>Type your id and password to confirm</p>
 

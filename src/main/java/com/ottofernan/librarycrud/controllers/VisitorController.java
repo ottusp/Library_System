@@ -49,14 +49,18 @@ public class VisitorController {
             }
 
             if(visitor.getPassword().equals(visitorBook.getVisitor().getPassword())) {
-                visitor.getBooks().add(rentedBook);
-                rentedBook.getVisitors().add(visitor);
-                restBookService.update(rentedBook);
+                rentedBook.rent(visitor);
                 visitorService.save(visitor);
+                restBookService.update(rentedBook);
+                return "index";
+            }
+            else {
+                model.addAttribute("rented_book", rentedBook);
+                model.addAttribute("borrowing_visitor", visitorBook);
+                return "books/rentBook";
             }
         } catch (NullPointerException npe){
             return "books/rentBook";
         }
-        return "notImplemented";
     }
 }

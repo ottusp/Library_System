@@ -1,6 +1,5 @@
 package com.ottofernan.librarycrud.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -16,7 +15,6 @@ public class Book extends BaseEntity{
     private String isbn = "";
     private Integer amount = 0;
 
-    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "visitor_book", joinColumns = @JoinColumn(name = "book_id"),
         inverseJoinColumns = @JoinColumn(name = "visitor_id"))
@@ -87,5 +85,27 @@ public class Book extends BaseEntity{
         return "Book{" +
                 "title='" + title + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        return this.getId().equals(book.getId());
+    }
+
+    public boolean rent(Visitor visitor){
+        int amount = this.getAmount();
+        boolean containsBook = visitor.containBook(this);
+        if(amount > 0 && !containsBook){
+            visitor.getBooks().add(this);
+            this.getVisitors().add(visitor);
+            this.setAmount(amount - 1);
+            return true;
+        }
+        return false;
     }
 }

@@ -1,6 +1,7 @@
 package com.ottofernan.librarycrud.services.restbook;
 
 import com.ottofernan.librarycrud.models.Book;
+import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -49,10 +50,8 @@ public class RestBookServiceImpl implements RestBookService {
 
     public void update(Book book){
         if(book == null) return;
-        Long id = book.getId();
-        System.out.println("Updating id: " + id);
-//        HttpMessageC
-        String url = postResource + "?id=" + id;
-        restTemplate.put(url, id);
+        String url = postResource;
+        restTemplate.put(url, book);
     }
+
 }
