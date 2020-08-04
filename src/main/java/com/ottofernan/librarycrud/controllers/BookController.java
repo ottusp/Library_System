@@ -7,6 +7,7 @@ import com.ottofernan.librarycrud.services.restbook.RestBookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping({"/books", "/books/"})
@@ -49,12 +50,14 @@ public class BookController {
     }
 
     @GetMapping("/rent")
-    public String rentBook(@ModelAttribute("rented_book_id") Long id, Model model){
+    public String rentBook(@ModelAttribute("rented_book_id") Long id,
+                           Model model, RedirectAttributes redirectAttributes){
 
         if(id != null){
             Book rentedBook = restBookService.findById(id);
             model.addAttribute("rented_book", rentedBook);
             model.addAttribute("borrowing_visitor", new VisitorBook(new Visitor(), rentedBook));
+            redirectAttributes.addFlashAttribute("nextPage", "/books/list");
         }
         return "/books/rentBook";
     }

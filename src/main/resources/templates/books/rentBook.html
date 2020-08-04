@@ -7,11 +7,11 @@
 <body>
 <h1>Rent book</h1>
 <p>You are about to rent this book:
-    <b th:text="${rented_book.title} + ' - ' + ${rented_book.getAuthors().toArray()[0]}"></b>
+    <b th:text="${rented_book?.title} + ' - ' + ${rented_book?.getAuthors()?.toArray()[0]}"></b>
 </p>
 <p>Type your id and password to confirm</p>
 
-<form action="#" th:action="@{/visitors/auth}" th:object="${borrowing_visitor}">
+<form action="#" th:action="@{/visitors/rentBook}" th:object="${borrowing_visitor}">
     <label for="first-name">First name: </label>
     <input id="first-name" value="text" th:field="*{visitor.firstName}" name="first-name"/>
     <label for="password">Password: </label>

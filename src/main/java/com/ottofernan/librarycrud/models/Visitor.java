@@ -61,4 +61,13 @@ public class Visitor extends Person{
         return getBooks().stream().anyMatch(other -> other.equals(book));
     }
 
+    public static boolean isPasswordCorrect(Visitor received, Visitor correct){
+        if(received == null || correct == null) return false;
+        return correct.getPassword().equals(received.getPassword());
+    }
+
+    public static boolean isValid(Visitor visitor){
+        if(visitor == null) return false;
+        else return visitor.getPassword() != null && visitor.getFirstName() != null;
+    }
 }
