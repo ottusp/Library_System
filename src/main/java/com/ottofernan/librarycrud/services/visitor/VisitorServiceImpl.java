@@ -24,4 +24,8 @@ public class VisitorServiceImpl implements VisitorService {
     public Visitor findByFirstName(String firstName){
         return visitorRepository.findByFirstName(firstName);
     }
+
+    public Visitor findByFirstNameAndLastName(String firstName, String lastName){
+        return visitorRepository.findByFirstNameAndLastName(firstName, lastName);
+    }
 }

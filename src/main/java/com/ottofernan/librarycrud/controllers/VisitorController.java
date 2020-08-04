@@ -41,11 +41,10 @@ public class VisitorController {
     
 
     @GetMapping("/auth")
-    public String auth(HttpServletRequest request, RedirectAttributes redirect){
+    public String auth(HttpServletRequest request, RedirectAttributes redirect, Model model){
         System.out.println("Estou na auth");
 
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-        System.out.println(inputFlashMap);
         if(inputFlashMap != null) {
             inputFlashMap.forEach(redirect::addFlashAttribute);
             VisitorBook visitor = (VisitorBook) inputFlashMap.get("visitor");
@@ -56,7 +55,11 @@ public class VisitorController {
                 String nextPage = (String) inputFlashMap.get("successNextPage");
                 return "redirect:" + nextPage;
             } else if (correctVisitor == null) {
-                return "redirect:visitors/signIn";
+                model.addAttribute("visitor", new Visitor());
+                return "/visitors/signIn";
+            } else {
+                String nextPage = (String) inputFlashMap.get("failNextPage");
+                return "redirect:" + nextPage;
             }
         }
 
@@ -76,16 +79,15 @@ public class VisitorController {
         }
     }
 
-        @GetMapping("/rentAuthTrue")
+    @GetMapping("/rentAuthTrue")
     public String executeRentBook(HttpServletRequest request){
         System.out.println("Estou na rentAuthTrue");
 
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
         if(inputFlashMap != null){
             VisitorBook visitorBook = (VisitorBook) inputFlashMap.get("visitor");
-            System.out.println("visitorBook = " + visitorBook);
             Book book = restBookService.findById(visitorBook.getBook().getId());
-            Visitor visitor = visitorBook.getVisitor();
+            Visitor visitor = visitorService.findByFirstName(visitorBook.getVisitor().getFirstName());
             book.rent(visitor);
             visitorService.save(visitor);
             restBookService.update(book);
@@ -98,37 +100,5 @@ public class VisitorController {
     public String failOnRent(){
         return "visitors/wrongPassword";
     }
-
-
-//    @GetMapping("/auth")
-//    public String auth(@ModelAttribute("borrowing_visitor") VisitorBook visitorBook, Model model) {
-//        try {
-//            Visitor visitor = visitorService.findByFirstName(visitorBook.getVisitor().getFirstName());
-//            Book rentedBook = restBookService.findById(visitorBook.getBook().getId());
-//
-//            if (visitor == null) {
-//                model.addAttribute("visitor", new Visitor());
-//                return "visitors/signIn";
-//            }
-//
-//            if (visitor.getPassword().equals(visitorBook.getVisitor().getPassword())) {
-//                rentedBook.rent(visitor);
-//                visitorService.save(visitor);
-//                restBookService.update(rentedBook);
-//                return "index";
-//            } else {
-//                System.out.println("Senha incorreta!");
-//                model.addAttribute("rented_book", rentedBook);
-//                model.addAttribute("borrowing_visitor", visitorBook);
-//                return "books/rentBook";
-//            }
-//        } catch (NullPointerException npe) {
-//            System.out.println("Null pointer exception!");
-//            model.addAttribute("rented_book", visitorBook.getBook());
-//            model.addAttribute("borrowing_visitor", visitorBook);
-//            return "books/rentBook";
-//        }
-//    }
-
 
 }

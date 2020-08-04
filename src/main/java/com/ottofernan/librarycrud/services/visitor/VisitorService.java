@@ -9,4 +9,6 @@ public interface VisitorService {
      Visitor findById(Long id);
 
      Visitor findByFirstName(String firstName);
+
+     Visitor findByFirstNameAndLastName(String firstName, String lastName);
 }
