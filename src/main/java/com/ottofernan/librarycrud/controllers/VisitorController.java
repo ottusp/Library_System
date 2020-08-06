@@ -88,10 +88,13 @@ public class VisitorController {
             VisitorBook visitorBook = (VisitorBook) inputFlashMap.get("visitor");
             Book book = restBookService.findById(visitorBook.getBook().getId());
             Visitor visitor = visitorService.findByFirstName(visitorBook.getVisitor().getFirstName());
-            book.rent(visitor);
-            visitorService.save(visitor);
-            restBookService.update(book);
-            return "books/rentSuccessfully";
+            if(book.rent(visitor)) {
+                visitorService.save(visitor);
+                restBookService.update(book);
+                return "books/rentSuccessfully";
+            } else {
+                return "books/alreadyHaveBook";
+            }
         }
         return "error";
     }
