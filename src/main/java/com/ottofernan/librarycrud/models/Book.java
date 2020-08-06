@@ -108,4 +108,15 @@ public class Book extends BaseEntity{
         }
         return false;
     }
+
+    public boolean returnBook(Visitor visitor){
+        if(visitor.containBook(this)) {
+            boolean isBookRemoved = visitor.getBooks().removeIf(book -> book.equals(this));
+            boolean isVisitorRemoved = this.getVisitors().removeIf(visit -> visit.equals(visitor));
+            int amount = this.getAmount();
+            this.setAmount(amount + 1);
+            return isBookRemoved && isVisitorRemoved;
+        }
+        return false;
+    }
 }

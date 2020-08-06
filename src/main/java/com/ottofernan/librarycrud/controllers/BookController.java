@@ -40,8 +40,16 @@ public class BookController {
     }
 
     @GetMapping("/returnBook")
-    public String returnBook(){
-        return "notImplemented";
+    public String returnBook(@ModelAttribute Visitor visitor, Model model, RedirectAttributes redirect) {
+        if(!Visitor.isValid(visitor)) {
+            model.addAttribute("visitor", new Visitor());
+            return "/visitors/login";
+        } else {
+            redirect.addFlashAttribute("visitor", new VisitorBook(visitor, new Book()));
+            redirect.addFlashAttribute("successNextPage", "/visitors/returnAuthTrue");
+            redirect.addFlashAttribute("failNextPage", "/visitors/returnAuthFail");
+            return "redirect:/visitors/auth";
+        }
     }
 
     @GetMapping("/donate")
@@ -50,21 +58,18 @@ public class BookController {
     }
 
     @GetMapping("/rent")
-    public String rentBook(@ModelAttribute("rented_book_id") Long id,
-                           Model model, RedirectAttributes redirectAttributes){
+    public String rentBook(@ModelAttribute("rented_book_id") Long id, Model model){
 
         if(id != null){
             Book rentedBook = restBookService.findById(id);
             model.addAttribute("rented_book", rentedBook);
             model.addAttribute("borrowing_visitor", new VisitorBook(new Visitor(), rentedBook));
-            redirectAttributes.addFlashAttribute("nextPage", "/books/list");
         }
         return "/books/rentBook";
     }
 
     @PostMapping("/post")
     public String postBook(@ModelAttribute("newBook") Book book){
-        System.out.println(book);
 
         restBookService.create(book);
         return "index";

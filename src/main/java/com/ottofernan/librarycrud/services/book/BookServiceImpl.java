@@ -2,7 +2,6 @@ package com.ottofernan.librarycrud.services.book;
 
 import com.ottofernan.librarycrud.models.Book;
 import com.ottofernan.librarycrud.repositories.BookRepository;
-import com.ottofernan.librarycrud.services.book.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;

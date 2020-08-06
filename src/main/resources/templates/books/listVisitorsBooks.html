@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your books</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            padding: 1px;
+        }
+    </style>
+
+</head>
+<body>
+<h1>Your books</h1>
+<div th:if="${#sets.isEmpty(visitor.visitor.getBooks())}">
+    <p>No book found. Go back to <a th:href="@{/index}">home page</a></p>
+</div>
+<div th:unless="${#sets.isEmpty(visitor.visitor.getBooks())}">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>title</th>
+                <th>Publisher</th>
+                <th>ISBN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="currentBook: ${visitor.visitor.getBooks()}">
+                <td th:text="${currentBook.id}">Text ...</td>
+                <td th:text="${currentBook.title}">Text ...</td>
+                <td th:text="${currentBook.publisher}">Text ...</td>
+                <td th:text="${currentBook.isbn}">Text...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="#" th:action="@{/visitors/executeReturn}" th:object="${visitor}">
+        <input hidden="hidden" th:field="*{visitor.firstName}">
+        <input hidden="hidden" th:field="*{visitor.id}" >
+        <label>Type the id of the book you want to return
+            <input th:field="*{book.id}" required>
+        </label>
+        <button type="submit">Return this</button>
+    </form>
+</div>
+</body>
+</html>

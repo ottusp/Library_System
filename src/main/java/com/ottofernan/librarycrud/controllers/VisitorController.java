@@ -42,7 +42,6 @@ public class VisitorController {
 
     @GetMapping("/auth")
     public String auth(HttpServletRequest request, RedirectAttributes redirect, Model model){
-        System.out.println("Estou na auth");
 
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
         if(inputFlashMap != null) {
@@ -73,7 +72,7 @@ public class VisitorController {
             redirectAttributes.addFlashAttribute("successNextPage", "/visitors/rentAuthTrue");
             redirectAttributes.addFlashAttribute("failNextPage", "/visitors/rentAuthFalse");
             redirectAttributes.addFlashAttribute("visitor", visitorBook);
-            return "redirect:auth";
+            return "redirect:/visitors/auth";
         } else {
             return "redirect:http://localhost:8080/books/rentBook";
         }
@@ -81,7 +80,6 @@ public class VisitorController {
 
     @GetMapping("/rentAuthTrue")
     public String executeRentBook(HttpServletRequest request){
-        System.out.println("Estou na rentAuthTrue");
 
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
         if(inputFlashMap != null){
@@ -96,12 +94,52 @@ public class VisitorController {
                 return "books/alreadyHaveBook";
             }
         }
-        return "error";
+        return "error_";
     }
 
     @GetMapping("/rentAuthFalse")
     public String failOnRent(){
         return "visitors/wrongPassword";
+    }
+
+    @GetMapping("/returnAuthTrue")
+    public String returnSucessfully(HttpServletRequest request, Model model){
+        Map<String, ?> input = RequestContextUtils.getInputFlashMap(request);
+        if(input != null){
+            VisitorBook visitorBook = (VisitorBook) input.get("visitor");
+            Visitor checkedVisitor = visitorService.findByFirstName(visitorBook.getVisitor().getFirstName());
+            visitorBook.setVisitor(checkedVisitor);
+            model.addAttribute("visitor", visitorBook);
+            return "/books/listVisitorsBooks";
+        }
+        return "error_";
+    }
+
+    @GetMapping("/returnAuthFail")
+    public String failOnReturn(){
+        return "visitors/wrongPassword";
+    }
+
+    @GetMapping("/executeReturn")
+    public String executeReturn(@ModelAttribute("visitor") VisitorBook visitorBook, RedirectAttributes redirect){
+
+        Visitor checkedVisitor = visitorService.findById(visitorBook.getVisitor().getId());
+        Book checkedBook = restBookService.findById(visitorBook.getBook().getId());
+
+        if(checkedBook == null || checkedVisitor == null){
+            redirect.addFlashAttribute("visitor", visitorBook);
+            return "redirect:/visitors/returnAuthTrue";
+        }
+
+        if(checkedBook.returnBook(checkedVisitor)) {
+            visitorService.save(checkedVisitor);
+            restBookService.update(checkedBook);
+        } else {
+            redirect.addFlashAttribute("visitor", visitorBook);
+            return "redirect:/visitors/returnAuthTrue";
+        }
+
+        return "redirect:/index";
     }
 
 }

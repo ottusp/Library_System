@@ -13,13 +13,13 @@
     </style>
 </head>
 <body>
-<h1>Sign in!</h1>
-<form action="#" th:action="@{/visitors/signIn}" id="sign-in" th:object="${visitor}">
+<h1>Log in</h1>
+<form action="#" th:action="@{/books/returnBook}" id="sign-in" th:object="${visitor}">
     <div>
         <label for="first-name">First name: </label>
         <input id="first-name" value="text" th:field="*{firstName}" name="first-name"/>
-        <label for="last-name">Last name: </label>
-        <input id="last-name" value="text" th:field="*{lastName}" name="last-name"/>
+<!--        <label for="last-name">Last name: </label>-->
+<!--        <input id="last-name" value="text" th:field="*{lastName}" name="last-name"/>-->
         <label for="password">Password: </label>
         <input id="password" value="text" th:field="*{password}" name="password"/>
         <button type="submit">Sign in</button>
