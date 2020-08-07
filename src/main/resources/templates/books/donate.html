@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+
+    <title>Donate</title>
+</head>
+<body>
+<h1>Donate book</h1>
+<form action="#" th:action="@{/books/executeDonate}" th:method="post" th:object="${newBook}">
+    <div class="nine columns"></div>
+    <div class="nine columns">
+        <label>Title
+            <input type="text" placeholder="Title" class="u-full-width" th:field="*{title}" required />
+        </label>
+    </div>
+
+    <div class="nine columns">
+        <label>Publisher
+            <input type="text" placeholder="Publisher" class="u-full-width" th:field="*{publisher}" required />
+        </label>
+    </div>
+
+    <div class="nine columns">
+        <label>ISBN
+            <input type="text" placeholder="ISBN" class="u-full-width" th:field="*{isbn}" required/>
+        </label>
+    </div>
+
+    <div class="nine columns">
+        <label>Amount
+            <input type="number" placeholder="Amount" class="u-full-width" th:field="*{amount}" min="1"/>
+        </label>
+    </div>
+
+    <div class="three columns">
+        <button type="submit" class="button-primary u-full-width">Donate</button>
+    </div>
+
+</form>
+</body>
+</html>

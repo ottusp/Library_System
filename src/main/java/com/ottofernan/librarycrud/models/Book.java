@@ -119,4 +119,20 @@ public class Book extends BaseEntity{
         }
         return false;
     }
+
+    public static boolean isValid(Book book){
+        if(book == null) return false;
+        if(book.getTitle() != null && book.getPublisher() != null
+                && book.getIsbn() != null){
+            return !(book.getTitle().isEmpty() || book.getPublisher().isEmpty()
+                    || book.getIsbn().isEmpty());
+        }
+        return false;
+    }
+
+    public static boolean isValidWithId(Book book){
+        if(book != null){
+            return Book.isValid(book) && book.getId() != null;
+        } else return false;
+    }
 }

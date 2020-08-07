@@ -53,8 +53,19 @@ public class BookController {
     }
 
     @GetMapping("/donate")
-    public String donate(){
-        return "notImplemented";
+    public String donate(@ModelAttribute("newBook") Book book, Model model){
+        model.addAttribute("newBook", new Book());
+        return "/books/donate";
+    }
+
+    @PostMapping("/executeDonate")
+    public String executeDonate(@ModelAttribute("newBook") Book book){
+        if(Book.isValid(book) && book.getAmount() > 0){
+            System.out.println("Vou adicionar o livro");
+            restBookService.create(book);
+            return "/books/donateSuccessfully";
+        }
+        return "redirect:/books/donate";
     }
 
     @GetMapping("/rent")

@@ -1,7 +1,6 @@
 package com.ottofernan.librarycrud.services.restbook;
 
 import com.ottofernan.librarycrud.models.Book;
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -45,7 +44,7 @@ public class RestBookServiceImpl implements RestBookService {
     }
 
     public Book create(Book book){
-        return restTemplate.postForObject(getBookResource, book, Book.class);
+        return restTemplate.postForObject(postResource, book, Book.class);
     }
 
     public void update(Book book){

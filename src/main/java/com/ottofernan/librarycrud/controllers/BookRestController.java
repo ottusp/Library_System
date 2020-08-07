@@ -38,14 +38,10 @@ public class BookRestController {
     }
 
     @PostMapping("/post")
-    public Book postBook(@ModelAttribute("newBook") Book book){
-        if(book != null){
-            if(!book.getTitle().isEmpty() && !book.getIsbn().isEmpty()
-                    && !book.getPublisher().isEmpty()) {
-                bookService.save(book);
-            }
+    public Book postBook(@RequestBody Book book){
+        if(Book.isValid(book)){
+            bookService.save(book);
         }
-
         return book;
     }
 
