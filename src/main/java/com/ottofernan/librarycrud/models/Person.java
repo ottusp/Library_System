@@ -1,7 +1,5 @@
 package com.ottofernan.librarycrud.models;
 
-import org.hibernate.search.annotations.Indexed;
-
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
