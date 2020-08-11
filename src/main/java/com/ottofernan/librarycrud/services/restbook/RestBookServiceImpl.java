@@ -1,14 +1,12 @@
 package com.ottofernan.librarycrud.services.restbook;
 
 import com.ottofernan.librarycrud.domain.dtos.BookDTO;
-import com.ottofernan.librarycrud.domain.models.Book;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class RestBookServiceImpl implements RestBookService {

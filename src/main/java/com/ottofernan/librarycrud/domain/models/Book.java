@@ -2,11 +2,15 @@ package com.ottofernan.librarycrud.domain.models;
 
 
 import com.ottofernan.librarycrud.domain.dtos.BookDTO;
+import com.ottofernan.librarycrud.domain.dtos.VisitorDTO;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.Table;
+
+import static com.ottofernan.librarycrud.domain.dtos.VisitorDTOKt.toModel;
 
 @Entity
 @Table(name = "books")
@@ -35,7 +39,7 @@ public class Book extends BaseEntity{
     }
 
     public Book(Long id, String title, String publisher, String isbn, Integer amount,
-                Set<Visitor> visitors, Set<Author> authors) {
+                Set<Author> authors) {
         setId(id);
         this.title = title;
         this.publisher = publisher;
@@ -122,6 +126,19 @@ public class Book extends BaseEntity{
         return false;
     }
 
+    public boolean rent(VisitorDTO visitorDTO){
+        Visitor visitor = toModel(visitorDTO);
+        boolean isValid = rent(visitor);
+
+        if(isValid) {
+            visitorDTO.setBooks(visitor.books.stream().map(Book::toDto).collect(Collectors.toSet()));
+            return true;
+        }
+        return false;
+
+
+    }
+
     public boolean returnBook(Visitor visitor){
         if(visitor.containBook(this)) {
             boolean isBookRemoved = visitor.getBooks().removeIf(book -> book.equals(this));
@@ -133,10 +150,32 @@ public class Book extends BaseEntity{
         return false;
     }
 
+    public boolean returnBook(VisitorDTO visitorDTO){
+        Visitor visitor = toModel(visitorDTO);
+        boolean isValid = returnBook(visitor);
+        if(isValid){
+            visitorDTO.setBooks(visitor.books.stream().map(Book::toDto).collect(Collectors.toSet()));
+            return true;
+        }
+        return false;
+    }
+
     public BookDTO toDto(){
-        return new BookDTO(
-            getId(), title, publisher, isbn, amount, visitors, authors
+        BookDTO bookDTO = new BookDTO(
+            getId(), title, publisher, isbn, amount, authors
         );
+        for(Visitor visitor: visitors){
+            VisitorDTO visitorDTO = new VisitorDTO(
+                    visitor.getId(),
+                    visitor.getFirstName(),
+                    visitor.getLastName(),
+                    visitor.getPassword()
+            );
+            visitorDTO.getBooks().add(bookDTO);
+            bookDTO.getVisitors().add(visitorDTO);
+        }
+
+        return bookDTO;
     }
 
     public static boolean isValid(Book book){

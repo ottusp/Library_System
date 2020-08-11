@@ -2,7 +2,6 @@ package com.ottofernan.librarycrud.services.restbook;
 
 
 import com.ottofernan.librarycrud.domain.dtos.BookDTO;
-import com.ottofernan.librarycrud.domain.models.Book;
 
 import java.util.List;
 

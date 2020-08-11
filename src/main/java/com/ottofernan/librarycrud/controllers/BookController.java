@@ -1,6 +1,7 @@
 package com.ottofernan.librarycrud.controllers;
 
 import com.ottofernan.librarycrud.domain.dtos.BookDTO;
+import com.ottofernan.librarycrud.domain.dtos.VisitorDTO;
 import com.ottofernan.librarycrud.domain.models.Book;
 import com.ottofernan.librarycrud.domain.models.Visitor;
 import com.ottofernan.librarycrud.domain.models.VisitorBook;
@@ -42,8 +43,8 @@ public class BookController {
     }
 
     @GetMapping("/returnBook")
-    public String returnBook(@ModelAttribute Visitor visitor, Model model, RedirectAttributes redirect) {
-        if(!Visitor.isValid(visitor)) {
+    public String returnBook(@ModelAttribute VisitorDTO visitor, Model model, RedirectAttributes redirect) {
+        if(Visitor.isNotValid(visitor)) {
             model.addAttribute("visitor", new Visitor());
             return "/visitors/login";
         } else {
@@ -63,7 +64,6 @@ public class BookController {
     @PostMapping("/executeDonate")
     public String executeDonate(@ModelAttribute("newBook") BookDTO book){
         if(Book.isValid(toModel(book)) && book.getAmount() > 0){
-            System.out.println("Vou adicionar o livro");
             restBookService.create(book);
             return "/books/donateSuccessfully";
         }
@@ -76,9 +76,8 @@ public class BookController {
         if(id == null) return "/books/rentBook";
 
         BookDTO rentedBook = restBookService.findById(id);
-        System.out.println("Antes da rent: " + rentedBook);
         model.addAttribute("rented_book", rentedBook);
-        model.addAttribute("borrowing_visitor", new VisitorBook(new Visitor(), rentedBook));
+        model.addAttribute("borrowing_visitor", new VisitorBook(new VisitorDTO(), rentedBook));
         return "/books/rentBook";
 
     }

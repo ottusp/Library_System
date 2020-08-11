@@ -1,8 +1,11 @@
 package com.ottofernan.librarycrud.services.visitor;
 
+import com.ottofernan.librarycrud.domain.dtos.VisitorDTO;
 import com.ottofernan.librarycrud.domain.models.Visitor;
 import com.ottofernan.librarycrud.repositories.VisitorRepository;
 import org.springframework.stereotype.Service;
+
+import static com.ottofernan.librarycrud.domain.dtos.VisitorDTOKt.toModel;
 
 @Service
 public class VisitorServiceImpl implements VisitorService {
@@ -13,19 +16,24 @@ public class VisitorServiceImpl implements VisitorService {
         this.visitorRepository = visitorRepository;
     }
 
-    public Visitor save(Visitor visitor){
-        return visitorRepository.save(visitor);
+    public VisitorDTO save(VisitorDTO visitor){
+        Visitor savedVisitor = visitorRepository.save(toModel(visitor));
+        return savedVisitor.toDto();
     }
 
-    public Visitor findById(Long id){
-        return visitorRepository.findById(id).orElse(null);
+    public VisitorDTO findById(Long id){
+        Visitor visitor = visitorRepository.findById(id).orElse(null);
+        if(visitor == null) return null;
+        return visitor.toDto();
     }
 
-    public Visitor findByFirstName(String firstName){
-        return visitorRepository.findByFirstName(firstName);
+    public VisitorDTO findByFirstName(String firstName){
+        Visitor visitor = visitorRepository.findByFirstName(firstName);
+        if(visitor == null) return null;
+        return visitor.toDto();
     }
 
-    public Visitor findByFirstNameAndLastName(String firstName, String lastName){
-        return visitorRepository.findByFirstNameAndLastName(firstName, lastName);
+    public VisitorDTO findByFirstNameAndLastName(String firstName, String lastName){
+        return visitorRepository.findByFirstNameAndLastName(firstName, lastName).toDto();
     }
 }
