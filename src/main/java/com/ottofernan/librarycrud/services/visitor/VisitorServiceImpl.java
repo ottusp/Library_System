@@ -1,6 +1,6 @@
 package com.ottofernan.librarycrud.services.visitor;
 
-import com.ottofernan.librarycrud.models.Visitor;
+import com.ottofernan.librarycrud.domain.models.Visitor;
 import com.ottofernan.librarycrud.repositories.VisitorRepository;
 import org.springframework.stereotype.Service;
 

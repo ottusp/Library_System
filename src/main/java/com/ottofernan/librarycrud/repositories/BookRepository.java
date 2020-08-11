@@ -1,6 +1,6 @@
 package com.ottofernan.librarycrud.repositories;
 
-import com.ottofernan.librarycrud.models.Book;
+import com.ottofernan.librarycrud.domain.models.Book;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,10 +1,12 @@
-package com.ottofernan.librarycrud.models;
+package com.ottofernan.librarycrud.domain.models;
+
+import com.ottofernan.librarycrud.domain.dtos.BookDTO;
 
 public class VisitorBook {
     private Visitor visitor;
-    private Book book;
+    private BookDTO book;
 
-    public VisitorBook(Visitor visitor, Book book) {
+    public VisitorBook(Visitor visitor, BookDTO book) {
         this.visitor = visitor;
         this.book = book;
     }
@@ -17,11 +19,11 @@ public class VisitorBook {
         this.visitor = visitor;
     }
 
-    public Book getBook() {
+    public BookDTO getBook() {
         return book;
     }
 
-    public void setBook(Book book) {
+    public void setBook(BookDTO book) {
         this.book = book;
     }
 

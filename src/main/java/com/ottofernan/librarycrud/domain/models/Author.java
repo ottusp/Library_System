@@ -1,4 +1,4 @@
-package com.ottofernan.librarycrud.models;
+package com.ottofernan.librarycrud.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -7,7 +7,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Entity
 @Table(name = "Authors")

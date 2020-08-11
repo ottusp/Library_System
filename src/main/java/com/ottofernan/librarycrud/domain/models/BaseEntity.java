@@ -1,4 +1,4 @@
-package com.ottofernan.librarycrud.models;
+package com.ottofernan.librarycrud.domain.models;
 
 import javax.persistence.*;
 

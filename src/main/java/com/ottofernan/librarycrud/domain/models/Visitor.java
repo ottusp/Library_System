@@ -1,4 +1,4 @@
-package com.ottofernan.librarycrud.models;
+package com.ottofernan.librarycrud.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -69,5 +69,9 @@ public class Visitor extends Person{
     public static boolean isValid(Visitor visitor){
         if(visitor == null) return false;
         else return visitor.getPassword() != null && visitor.getFirstName() != null;
+    }
+
+    public static boolean isNotValid(Visitor visitor){
+        return !isValid(visitor);
     }
 }

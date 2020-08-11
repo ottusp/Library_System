@@ -1,19 +1,20 @@
 package com.ottofernan.librarycrud.services.restbook;
 
 
-import com.ottofernan.librarycrud.models.Book;
+import com.ottofernan.librarycrud.domain.dtos.BookDTO;
+import com.ottofernan.librarycrud.domain.models.Book;
 
 import java.util.List;
 
 public interface RestBookService {
 
-     List<Book> findAllBooks();
+     List<BookDTO> findAllBooks();
 
-     Book create(Book book);
+     BookDTO create(BookDTO book);
 
-     void update(Book book);
+     void update(BookDTO book);
 
-     List<Book> findByTitle(String title);
+     List<BookDTO> findByTitle(String title);
 
-     Book findById(Long id);
+     BookDTO findById(Long id);
 }

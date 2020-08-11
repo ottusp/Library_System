@@ -17,7 +17,8 @@
     <label for="password">Password: </label>
     <input id="password" value="text" th:field="*{visitor.password}" name="password"/>
 
-    <input hidden id="bookId" th:field="*{book.id}" />
+    <input hidden th:field="*{book.id}" />
+    <input hidden th:field="*{visitor.lastName}" />
     <button type="submit">Rent!</button>
 </form>
 

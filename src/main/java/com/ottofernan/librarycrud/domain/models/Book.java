@@ -1,5 +1,7 @@
-package com.ottofernan.librarycrud.models;
+package com.ottofernan.librarycrud.domain.models;
 
+
+import com.ottofernan.librarycrud.domain.dtos.BookDTO;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -30,6 +32,17 @@ public class Book extends BaseEntity{
     public Book(String title, String publisher) {
         this.title = title;
         this.publisher = publisher;
+    }
+
+    public Book(Long id, String title, String publisher, String isbn, Integer amount,
+                Set<Visitor> visitors, Set<Author> authors) {
+        setId(id);
+        this.title = title;
+        this.publisher = publisher;
+        this.isbn = isbn;
+        this.amount = amount;
+        this.visitors = visitors;
+        this.authors = authors;
     }
 
     public String getTitle() {
@@ -118,6 +131,12 @@ public class Book extends BaseEntity{
             return isBookRemoved && isVisitorRemoved;
         }
         return false;
+    }
+
+    public BookDTO toDto(){
+        return new BookDTO(
+            getId(), title, publisher, isbn, amount, visitors, authors
+        );
     }
 
     public static boolean isValid(Book book){

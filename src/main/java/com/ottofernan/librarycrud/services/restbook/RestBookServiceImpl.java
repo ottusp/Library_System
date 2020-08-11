@@ -1,12 +1,14 @@
 package com.ottofernan.librarycrud.services.restbook;
 
-import com.ottofernan.librarycrud.models.Book;
+import com.ottofernan.librarycrud.domain.dtos.BookDTO;
+import com.ottofernan.librarycrud.domain.models.Book;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RestBookServiceImpl implements RestBookService {
@@ -29,25 +31,25 @@ public class RestBookServiceImpl implements RestBookService {
         this.restTemplate = restTemplate;
     }
 
-    public List<Book> findAllBooks(){
-        return Arrays.asList(restTemplate.getForObject(getBookResource, Book[].class));
+    public List<BookDTO> findAllBooks(){
+        return Arrays.asList(restTemplate.getForObject(getBookResource, BookDTO[].class));
     }
 
-    public List<Book> findByTitle(String title){
+    public List<BookDTO> findByTitle(String title){
         String query = findByTitleResource + "?title=" + title;
-        return Arrays.asList(restTemplate.getForObject(query, Book[].class));
+        return Arrays.asList(restTemplate.getForObject(query, BookDTO[].class));
     }
 
-    public Book findById(Long id){
+    public BookDTO findById(Long id){
         String url = getBookResource + "/" + id;
-        return restTemplate.getForObject(url, Book.class);
+        return restTemplate.getForObject(url, BookDTO.class);
     }
 
-    public Book create(Book book){
-        return restTemplate.postForObject(postResource, book, Book.class);
+    public BookDTO create(BookDTO book){
+        return restTemplate.postForObject(postResource, book, BookDTO.class);
     }
 
-    public void update(Book book){
+    public void update(BookDTO book){
         if(book == null) return;
         String url = postResource;
         restTemplate.put(url, book);
