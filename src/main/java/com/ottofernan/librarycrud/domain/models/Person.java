@@ -1,4 +1,4 @@
-package com.ottofernan.librarycrud.models;
+package com.ottofernan.librarycrud.domain.models;
 
 import javax.persistence.MappedSuperclass;
 
@@ -7,6 +7,15 @@ public abstract class Person extends BaseEntity{
 
     private String firstName;
     private String lastName;
+
+    public Person() {
+    }
+
+    public Person(Long id, String firstName, String lastName) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     public String getFirstName() {
         return firstName;

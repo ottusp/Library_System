@@ -1,14 +1,15 @@
 package com.ottofernan.librarycrud.services.visitor;
 
-import com.ottofernan.librarycrud.models.Visitor;
+import com.ottofernan.librarycrud.domain.dtos.VisitorDTO;
+import com.ottofernan.librarycrud.domain.models.Visitor;
 
 public interface VisitorService {
 
-     Visitor save(Visitor visitor);
+     VisitorDTO save(VisitorDTO visitor);
 
-     Visitor findById(Long id);
+     VisitorDTO findById(Long id);
 
-     Visitor findByFirstName(String firstName);
+     VisitorDTO findByFirstName(String firstName);
 
-     Visitor findByFirstNameAndLastName(String firstName, String lastName);
+     VisitorDTO findByFirstNameAndLastName(String firstName, String lastName);
 }
