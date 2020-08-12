@@ -1,6 +1,8 @@
 package com.ottofernan.librarycrud.controllers
 
-import com.ottofernan.librarycrud.models.Book
+import com.ottofernan.librarycrud.domain.dtos.BookDTO
+import com.ottofernan.librarycrud.domain.dtos.toModel
+import com.ottofernan.librarycrud.domain.models.Book
 import com.ottofernan.librarycrud.services.book.BookService
 import org.springframework.web.bind.annotation.*
 
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 class BookRestController(private val bookService: BookService) {
 
     @GetMapping("/get")
-    fun getAll(): Set<Book> =
+    fun getAll(): Set<BookDTO> =
             bookService.findAll()
 
     @GetMapping("/get/{id}")
@@ -17,19 +19,20 @@ class BookRestController(private val bookService: BookService) {
             bookService.findById(id)
 
     @GetMapping("/getByTitle")
-    fun getByTitle(@ModelAttribute("title") title: String): Set<Book> =
+    fun getByTitle(@ModelAttribute("title") title: String): Set<BookDTO> =
             bookService.findAllByTitle(title)
 
     @PostMapping
-    fun postBook(@RequestBody book: Book): Book {
+    fun postBook(@RequestBody bookDTO: BookDTO): BookDTO {
+        val book = toModel(bookDTO)
         if(Book.isValid(book)){
-            bookService.save(book)
+            bookService.save(bookDTO)
         }
-        return book
+        return bookDTO
     }
 
     @PutMapping(consumes = ["application/json"])
-    fun updateBook(@RequestBody book: Book) {
+    fun updateBook(@RequestBody book: BookDTO) {
         val checkedBook = bookService.findById(book.id)
         if(checkedBook != null) {
             bookService.save(book)
