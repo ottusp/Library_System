@@ -1,8 +1,8 @@
 package com.ottofernan.librarycrud.bootstrap;
 
-import com.ottofernan.librarycrud.models.Author;
-import com.ottofernan.librarycrud.models.Book;
-import com.ottofernan.librarycrud.models.Visitor;
+import com.ottofernan.librarycrud.domain.models.Author;
+import com.ottofernan.librarycrud.domain.models.Book;
+import com.ottofernan.librarycrud.domain.models.Visitor;
 import com.ottofernan.librarycrud.repositories.AuthorRepository;
 import com.ottofernan.librarycrud.repositories.BookRepository;
 import com.ottofernan.librarycrud.repositories.VisitorRepository;

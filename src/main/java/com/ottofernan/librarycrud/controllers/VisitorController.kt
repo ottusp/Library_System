@@ -1,7 +1,9 @@
 package com.ottofernan.librarycrud.controllers
 
-import com.ottofernan.librarycrud.models.Visitor
-import com.ottofernan.librarycrud.models.VisitorBook
+import com.ottofernan.librarycrud.domain.dtos.VisitorDTO
+import com.ottofernan.librarycrud.domain.dtos.toModel
+import com.ottofernan.librarycrud.domain.models.Visitor
+import com.ottofernan.librarycrud.domain.models.VisitorBook
 import com.ottofernan.librarycrud.services.restbook.RestBookService
 import com.ottofernan.librarycrud.services.visitor.VisitorService
 import org.springframework.stereotype.Controller
@@ -21,18 +23,15 @@ class VisitorController(
 ) {
 
     @GetMapping("/signIn")
-    fun signInPage(
-            @ModelAttribute("visitor") visitor: Visitor?,
-            model: Model
-    ): String {
-        if(visitor == null)
-            model.addAttribute("visitor", Visitor())
-        else if (visitor.firstName != null && visitor.lastName != null) {
-            visitorService.save(visitor)
-            return "redirect:/"
+    fun signInPage(@ModelAttribute("visitor") visitor: VisitorDTO?, model: Model): String {
+        if(visitor == null) {
+            model.addAttribute("visitor", VisitorDTO())
+            return "/visitors/signIn"
         }
 
-        return "/visitors/signIn"
+        visitorService.save(visitor)
+        return "redirect:/"
+
     }
 
     @GetMapping("/auth")
@@ -44,7 +43,7 @@ class VisitorController(
         val visitor = inputFlashMap["visitor"] as VisitorBook
         val correctVisitor = visitorService.findByFirstName(visitor.visitor.firstName)
         if(correctVisitor == null){
-            model.addAttribute("visitor", Visitor())
+            model.addAttribute("visitor", VisitorDTO())
             return "visitors/signIn"
         }
 
@@ -72,13 +71,14 @@ class VisitorController(
         val inputFlashMap = RequestContextUtils.getInputFlashMap(request) ?: return "error_"
 
         val visitorBook = inputFlashMap["visitor"] as VisitorBook
-        val book = restBookService.findById(visitorBook.book.id)
+        val bookDTO = restBookService.findById(visitorBook.book.id)
         val visitor = visitorService.findByFirstName((visitorBook.visitor.firstName))
+        val book = toModel(bookDTO)
 
         if(!book.rent(visitor)) return "books/alreadyHaveBook"
 
         visitorService.save(visitor)
-        restBookService.update(book)
+        restBookService.update(book.toDto())
         return "books/rentSuccessfully"
     }
 
@@ -104,16 +104,17 @@ class VisitorController(
     @GetMapping("/executeReturn")
     fun executeReturn(@ModelAttribute("visitor") visitorBook: VisitorBook, redirect: RedirectAttributes): String {
         val checkedVisitor = visitorService.findById(visitorBook.visitor.id)
-        val checkedBook = restBookService.findById(visitorBook.book.id)
+        val checkedBookDTO = restBookService.findById(visitorBook.book.id)
+        val checkedBook = toModel(checkedBookDTO)
 
-        if(checkedBook == null || checkedVisitor == null) {
+        if(checkedVisitor == null) {
             redirect.addFlashAttribute("visitor", visitorBook)
             return "redirect:/visitors/returnAuthTrue"
         }
 
         return if(checkedBook.returnBook(checkedVisitor)) {
             visitorService.save(checkedVisitor)
-            restBookService.update(checkedBook)
+            restBookService.update(checkedBook.toDto())
             "redirect:/"
         } else {
             redirect.addFlashAttribute("visitor", visitorBook)
