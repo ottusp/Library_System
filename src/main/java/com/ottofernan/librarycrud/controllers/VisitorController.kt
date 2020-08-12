@@ -21,7 +21,10 @@ class VisitorController(
 ) {
 
     @GetMapping("/signIn")
-    fun signInPage(@ModelAttribute("visitor") visitor: Visitor?, model: Model): String {
+    fun signInPage(
+            @ModelAttribute("visitor") visitor: Visitor?,
+            model: Model
+    ): String {
         if(visitor == null)
             model.addAttribute("visitor", Visitor())
         else if (visitor.firstName != null && visitor.lastName != null) {

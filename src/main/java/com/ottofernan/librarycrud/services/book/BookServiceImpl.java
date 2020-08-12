@@ -21,7 +21,6 @@ public class BookServiceImpl implements BookService {
     }
 
     public Set<Book> findAllByTitle(String title){
-        System.out.println("In findAllByTitle, will search for = '" + title + "'");
         return bookRepository.findByTitleIgnoreCaseLikeOrderByTitleAsc("%" + title + "%");
     }
 

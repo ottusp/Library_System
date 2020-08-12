@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 @RequestMapping("/books")
 class BookController (val restBookService: RestBookService) {
 
-    @GetMapping("list")
+    @GetMapping("/list")
     fun getBooks(model: Model): String {
         model.addAttribute("books", restBookService.findAllBooks())
         model.addAttribute("newBook", Book())
@@ -24,7 +24,7 @@ class BookController (val restBookService: RestBookService) {
         return "books/listBooks"
     }
 
-    @GetMapping("search")
+    @GetMapping("/search")
     fun search(@ModelAttribute("title") title: String, model: Model): String{
         model.addAttribute("results", restBookService.findByTitle(title))
         model.addAttribute("rented_book_id")
