@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 class IndexController {
 
-    @RequestMapping("", "/")
+    @RequestMapping("", "/", "index")
     fun mainPage() =
             "index"
 }
