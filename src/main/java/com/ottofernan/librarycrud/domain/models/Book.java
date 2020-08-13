@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.persistence.Table;
 
 import static com.ottofernan.librarycrud.domain.dtos.VisitorDTOKt.toModel;
+import static com.ottofernan.librarycrud.domain.dtos.BookDTOKt.toModel;
 
 @Entity
 @Table(name = "books")
@@ -186,6 +187,11 @@ public class Book extends BaseEntity{
                     || book.getIsbn().isEmpty());
         }
         return false;
+    }
+
+    public static boolean isValid(BookDTO book){
+        Book _book = toModel(book);
+        return isValid(_book);
     }
 
     public static boolean isValidWithId(Book book){

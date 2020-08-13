@@ -1,8 +1,8 @@
 package com.ottofernan.librarycrud.controllers
 
 import com.ottofernan.librarycrud.domain.dtos.BookDTO
-import com.ottofernan.librarycrud.domain.dtos.toModel
-import com.ottofernan.librarycrud.domain.models.Book
+import com.ottofernan.librarycrud.domain.exceptions.EntityNotFoundException
+import com.ottofernan.librarycrud.domain.exceptions.InvalidBookException
 import com.ottofernan.librarycrud.services.book.BookService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -19,37 +19,48 @@ class BookRestController(private val bookService: BookService) {
     }
 
     @GetMapping("/get/{id}")
-    fun getById(@PathVariable("id") id: Long): ResponseEntity<BookDTO?> {
-        val book: BookDTO? = bookService.findById(id)
-        return ResponseEntity.status(HttpStatus.OK).body(book)
+    fun getById(@PathVariable("id") id: Long): ResponseEntity<Any> {
+        return try {
+            val book = bookService.findById(id)
+            ResponseEntity.ok(book)
+        } catch (enfe: EntityNotFoundException){
+            ResponseEntity.badRequest().body(enfe.message)
+        }
     }
 
     @GetMapping("/getByTitle")
-    fun getByTitle(@RequestParam title: String): ResponseEntity<Set<BookDTO>> {
-        val books = bookService.findAllByTitle(title)
-        return ResponseEntity.status(HttpStatus.OK).body(books)
+    fun getByTitle(@RequestParam title: String): ResponseEntity<Any> {
+
+        return try {
+            val books = bookService.findAllByTitle(title)
+            ResponseEntity.ok(books)
+        } catch (enfe: EntityNotFoundException){
+            ResponseEntity.badRequest().body(enfe.message)
+        }
     }
 
     @PostMapping
     fun postBook(@RequestBody book: BookDTO): ResponseEntity<Any?> {
-        val checkedBook: BookDTO?
 
-        if(Book.isValid(toModel(book))) {
-            checkedBook = bookService.save(book)
-            return ResponseEntity.status(HttpStatus.CREATED).body(checkedBook)
+        return try {
+            val checkedBook = bookService.save(book)
+            ResponseEntity.status(HttpStatus.CREATED).body(checkedBook)
+        } catch (ibe: InvalidBookException) {
+            ResponseEntity.badRequest().body(ibe.message)
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("This is not a valid book")
-
     }
 
     @PutMapping(consumes = ["application/json"])
     fun updateBook(@RequestBody book: BookDTO): ResponseEntity<Any> {
-        val checkedBook = bookService.findById(book.id)
-        if(checkedBook != null) {
-            bookService.save(book)
-            return ResponseEntity.status(HttpStatus.ACCEPTED).build()
+
+        try {
+            bookService.findById(book.id)
+        } catch (enfe: EntityNotFoundException) {
+            return ResponseEntity.badRequest().body(enfe.message)
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).build()
+
+        bookService.save(book)
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build()
     }
 
 
