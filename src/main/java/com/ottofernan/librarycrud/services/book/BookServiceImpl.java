@@ -11,8 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.ottofernan.librarycrud.domain.dtos.BookDTOKt.toModel;
-
 @Service
 public class BookServiceImpl implements BookService {
 
@@ -53,7 +51,7 @@ public class BookServiceImpl implements BookService {
 
     public BookDTO save(BookDTO book){
         if(Book.isValid(book))
-            return bookRepository.save(toModel(book)).toDto();
+            return bookRepository.save(BookDTO.Transform.toModel(book)).toDto();
 
         throw new InvalidBookException("The book " + book + " is invalid");
     }

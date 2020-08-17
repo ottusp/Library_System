@@ -1,7 +1,7 @@
 package com.ottofernan.librarycrud.controllers
 
+import com.ottofernan.librarycrud.domain.dtos.BookDTO
 import com.ottofernan.librarycrud.domain.dtos.VisitorDTO
-import com.ottofernan.librarycrud.domain.dtos.toModel
 import com.ottofernan.librarycrud.domain.models.Visitor
 import com.ottofernan.librarycrud.domain.models.VisitorBook
 import com.ottofernan.librarycrud.services.restbook.RestBookService
@@ -42,6 +42,7 @@ class VisitorController(
 
         val visitor = inputFlashMap["visitor"] as VisitorBook
         val correctVisitor = visitorService.findByFirstName(visitor.visitor.firstName)
+
         if(correctVisitor == null){
             model.addAttribute("visitor", VisitorDTO())
             return "visitors/signIn"
@@ -73,7 +74,7 @@ class VisitorController(
         val visitorBook = inputFlashMap["visitor"] as VisitorBook
         val bookDTO = restBookService.findById(visitorBook.book.id)
         val visitor = visitorService.findByFirstName((visitorBook.visitor.firstName))
-        val book = toModel(bookDTO)
+        val book = BookDTO.toModel(bookDTO)
 
         if(!book.rent(visitor)) return "books/alreadyHaveBook"
 
@@ -105,7 +106,7 @@ class VisitorController(
     fun executeReturn(@ModelAttribute("visitor") visitorBook: VisitorBook, redirect: RedirectAttributes): String {
         val checkedVisitor = visitorService.findById(visitorBook.visitor.id)
         val checkedBookDTO = restBookService.findById(visitorBook.book.id)
-        val checkedBook = toModel(checkedBookDTO)
+        val checkedBook = BookDTO.toModel(checkedBookDTO)
 
         if(checkedVisitor == null) {
             redirect.addFlashAttribute("visitor", visitorBook)
@@ -115,9 +116,11 @@ class VisitorController(
         return if(checkedBook.returnBook(checkedVisitor)) {
             visitorService.save(checkedVisitor)
             restBookService.update(checkedBook.toDto())
+
             "redirect:/"
         } else {
             redirect.addFlashAttribute("visitor", visitorBook)
+
             "redirect:/visitors/returnAuthTrue"
         }
     }

@@ -13,22 +13,31 @@ data class BookDTO(
         var authors: MutableSet<Author> = HashSet()
 ) {
     var visitors: MutableSet<VisitorDTO> = HashSet()
-}
 
-fun toModel(bookDTO: BookDTO): Book{
-    val book = Book(
-            bookDTO.id, bookDTO.title, bookDTO.publisher, bookDTO.isbn, bookDTO.amount, bookDTO.authors
-    )
-    for (visitor in bookDTO.visitors) {
-        val visitor = Visitor(
-                visitor.id,
-                visitor.firstName,
-                visitor.lastName,
-                visitor.password
-        )
-        visitor.books.add(book)
-        book.visitors.add(visitor)
+    companion object Transform {
+        fun toModel(bookDTO: BookDTO?): Book {
+            if(bookDTO == null) return Book()
+
+            val book = Book(
+                    bookDTO.id,
+                    bookDTO.title,
+                    bookDTO.publisher,
+                    bookDTO.isbn,
+                    bookDTO.amount,
+                    bookDTO.authors
+            )
+            bookDTO.visitors.forEach {
+                val visitor = Visitor(
+                        it.id,
+                        it.firstName,
+                        it.lastName,
+                        it.password
+                )
+                visitor.books.add(book)
+                book.visitors.add(visitor)
+            }
+
+            return book
+        }
     }
-
-    return book
 }

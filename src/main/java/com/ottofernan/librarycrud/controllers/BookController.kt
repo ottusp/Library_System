@@ -2,7 +2,6 @@ package com.ottofernan.librarycrud.controllers
 
 import com.ottofernan.librarycrud.domain.dtos.BookDTO
 import com.ottofernan.librarycrud.domain.dtos.VisitorDTO
-import com.ottofernan.librarycrud.domain.dtos.toModel
 import com.ottofernan.librarycrud.domain.models.Book
 import com.ottofernan.librarycrud.domain.models.Visitor
 import com.ottofernan.librarycrud.domain.models.VisitorBook
@@ -55,7 +54,7 @@ class BookController (private val restBookService: RestBookService) {
 
     @PostMapping("executeDonate")
     fun executeDonate(@ModelAttribute("newBook") bookDTO: BookDTO): String{
-        val book = toModel(bookDTO)
+        val book = BookDTO.toModel(bookDTO)
         if(Book.isValid(book) && book.amount > 0){
             restBookService.create(bookDTO)
             return "/books/donateSuccessfully"
