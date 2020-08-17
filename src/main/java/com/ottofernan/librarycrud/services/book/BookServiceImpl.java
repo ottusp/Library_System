@@ -1,6 +1,8 @@
 package com.ottofernan.librarycrud.services.book;
 
 import com.ottofernan.librarycrud.domain.dtos.BookDTO;
+import com.ottofernan.librarycrud.domain.exceptions.EntityNotFoundException;
+import com.ottofernan.librarycrud.domain.exceptions.InvalidBookException;
 import com.ottofernan.librarycrud.domain.models.Book;
 import com.ottofernan.librarycrud.repositories.BookRepository;
 import org.springframework.stereotype.Service;
@@ -25,17 +27,22 @@ public class BookServiceImpl implements BookService {
     }
 
     public Set<BookDTO> findAllByTitle(String title){
-        return bookRepository
+        Set<BookDTO> books = bookRepository
                 .findByTitleIgnoreCaseLikeOrderByTitleAsc("%" + title + "%")
                 .stream()
                 .map(Book::toDto)
                 .collect(Collectors.toSet());
+
+        if(books.isEmpty())
+            throw new EntityNotFoundException("No book matches title = " + title);
+
+        return books;
     }
 
     public BookDTO findById(Long id){
         Book book = bookRepository.findById(id).orElse(null);
-        if(book == null) return null;
-        else return book.toDto();
+        if(book != null) return book.toDto();
+        else throw new EntityNotFoundException("Could not find a book with id = " + id);
     }
 
     public Set<BookDTO> findAll(){
@@ -45,6 +52,9 @@ public class BookServiceImpl implements BookService {
     }
 
     public BookDTO save(BookDTO book){
-        return bookRepository.save(toModel(book)).toDto();
+        if(Book.isValid(book))
+            return bookRepository.save(toModel(book)).toDto();
+
+        throw new InvalidBookException("The book " + book + " is invalid");
     }
 }

@@ -3,8 +3,10 @@ package com.ottofernan.librarycrud.services.restbook;
 import com.ottofernan.librarycrud.domain.dtos.BookDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,8 +36,13 @@ public class RestBookServiceImpl implements RestBookService {
     }
 
     public List<BookDTO> findByTitle(String title){
-        String query = findByTitleResource + "?title=" + title;
-        return Arrays.asList(restTemplate.getForObject(query, BookDTO[].class));
+        try {
+            String query = findByTitleResource + "?title=" + title;
+            return Arrays.asList(restTemplate.getForObject(query, BookDTO[].class));
+        } catch (HttpClientErrorException e){
+            System.out.println("Não encontrado!");
+            return new ArrayList<>();
+        }
     }
 
     public BookDTO findById(Long id){
