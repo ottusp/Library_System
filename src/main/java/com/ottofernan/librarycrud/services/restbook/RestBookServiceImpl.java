@@ -15,16 +15,13 @@ public class RestBookServiceImpl implements RestBookService {
 
     private final RestTemplate restTemplate;
 
-    @Value("${resource.get_books}")
-    private String getBookResource;
+    @Value("${resource.api_books}")
+    private String apiBookResource;
 
     @Value("${resource.get_books_by_title}")
     private String findByTitleResource;
 
-    @Value("${resource.post_book}")
-    private String postResource;
-
-    @Value("${resource.get_books}/{id}")
+    @Value("${resource.api_books}/{id}")
     private String idResource;
 
     public RestBookServiceImpl(RestTemplate restTemplate) {
@@ -32,7 +29,7 @@ public class RestBookServiceImpl implements RestBookService {
     }
 
     public List<BookDTO> findAllBooks(){
-        return Arrays.asList(restTemplate.getForObject(getBookResource, BookDTO[].class));
+        return Arrays.asList(restTemplate.getForObject(apiBookResource, BookDTO[].class));
     }
 
     public List<BookDTO> findByTitle(String title){
@@ -46,17 +43,17 @@ public class RestBookServiceImpl implements RestBookService {
     }
 
     public BookDTO findById(Long id){
-        String url = getBookResource + "/" + id;
+        String url = apiBookResource + "/" + id;
         return restTemplate.getForObject(url, BookDTO.class);
     }
 
     public BookDTO create(BookDTO book){
-        return restTemplate.postForObject(postResource, book, BookDTO.class);
+        return restTemplate.postForObject(apiBookResource, book, BookDTO.class);
     }
 
     public void update(BookDTO book){
         if(book == null) return;
-        String url = postResource;
+        String url = apiBookResource;
         restTemplate.put(url, book);
     }
 

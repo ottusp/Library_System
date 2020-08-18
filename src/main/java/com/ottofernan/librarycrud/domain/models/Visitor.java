@@ -8,9 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-
-import static com.ottofernan.librarycrud.domain.dtos.VisitorDTOKt.toModel;
 
 @Entity
 public class Visitor extends Person{
@@ -94,11 +91,6 @@ public class Visitor extends Person{
         return getBooks().stream().anyMatch(other -> other.equals(book));
     }
 
-    public static boolean isPasswordCorrect(Visitor received, Visitor correct){
-        if(received == null || correct == null) return false;
-        return correct.getPassword().equals(received.getPassword());
-    }
-
     public static boolean isPasswordCorrect(VisitorDTO received, VisitorDTO correct){
         if(received == null || correct == null) return false;
         return correct.getPassword().equals(received.getPassword());
@@ -113,7 +105,7 @@ public class Visitor extends Person{
     }
 
     public static boolean isValid(VisitorDTO visitorDTO){
-        return isValid(toModel(visitorDTO));
+        return isValid(VisitorDTO.toModel(visitorDTO));
     }
 
     public static boolean isNotValid(Visitor visitor){

@@ -12,20 +12,24 @@ data class VisitorDTO(
 ){
         @JsonIgnore
         var books: MutableSet<BookDTO> = HashSet()
-}
 
-fun toModel(visitorDTO: VisitorDTO): Visitor {
-        val visitor = Visitor(
-                visitorDTO.id,
-                visitorDTO.firstName,
-                visitorDTO.lastName,
-                visitorDTO.password,
-        )
-        visitorDTO.books.forEach{
-                val book = Book(it.id, it.title, it.publisher, it.isbn, it.amount, it.authors)
-                book.visitors.add(visitor)
-                visitor.books.add(book)
+        companion object {
+
+                @JvmStatic
+                fun toModel(visitorDTO: VisitorDTO): Visitor {
+                        val visitor = Visitor(
+                                visitorDTO.id,
+                                visitorDTO.firstName,
+                                visitorDTO.lastName,
+                                visitorDTO.password,
+                        )
+                        visitorDTO.books.forEach{
+                                val book = Book(it.id, it.title, it.publisher, it.isbn, it.amount, it.authors)
+                                book.visitors.add(visitor)
+                                visitor.books.add(book)
+                        }
+
+                        return visitor
+                }
         }
-
-        return visitor
 }
