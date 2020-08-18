@@ -10,9 +10,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.Table;
 
-import static com.ottofernan.librarycrud.domain.dtos.VisitorDTOKt.toModel;
-import static com.ottofernan.librarycrud.domain.dtos.BookDTOKt.toModel;
-
 @Entity
 @Table(name = "books")
 public class Book extends BaseEntity{
@@ -46,7 +43,6 @@ public class Book extends BaseEntity{
         this.publisher = publisher;
         this.isbn = isbn;
         this.amount = amount;
-        this.visitors = visitors;
         this.authors = authors;
     }
 
@@ -128,7 +124,7 @@ public class Book extends BaseEntity{
     }
 
     public boolean rent(VisitorDTO visitorDTO){
-        Visitor visitor = toModel(visitorDTO);
+        Visitor visitor = VisitorDTO.toModel(visitorDTO);
         boolean isValid = rent(visitor);
 
         if(isValid) {
@@ -152,7 +148,7 @@ public class Book extends BaseEntity{
     }
 
     public boolean returnBook(VisitorDTO visitorDTO){
-        Visitor visitor = toModel(visitorDTO);
+        Visitor visitor = VisitorDTO.toModel(visitorDTO);
         boolean isValid = returnBook(visitor);
         if(isValid){
             visitorDTO.setBooks(visitor.books.stream().map(Book::toDto).collect(Collectors.toSet()));
@@ -189,8 +185,8 @@ public class Book extends BaseEntity{
         return false;
     }
 
-    public static boolean isValid(BookDTO book){
-        Book _book = toModel(book);
+    public static boolean isValid(BookDTO bookDTO){
+        Book _book = BookDTO.toModel(bookDTO);
         return isValid(_book);
     }
 

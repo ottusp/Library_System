@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/books")
 class BookRestController(private val bookService: BookService) {
 
-    @GetMapping("/get")
+    @GetMapping
     fun getAll(): ResponseEntity<Set<BookDTO>> {
         val books: Set<BookDTO> = bookService.findAll()
         return ResponseEntity.ok().body(books)
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("{id}")
     fun getById(@PathVariable("id") id: Long): ResponseEntity<Any> {
         return try {
             val book = bookService.findById(id)
